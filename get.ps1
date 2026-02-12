@@ -1,4 +1,4 @@
-# get.ps1 — FotoRezka install bootstrap
+# get.ps1 -- FotoRezka install bootstrap
 # Usage (pipe):   powershell -c "irm https://fotorezka.github.io/get.ps1 | iex"
 # Usage (file):   powershell -ExecutionPolicy Bypass -File get.ps1
 
@@ -10,7 +10,7 @@ $fullUrl  = "$repoBase/releases/latest/download/FotoRezka.zip"
 $zip = Join-Path $env:TEMP 'FotoRezka-update.zip'
 $dir = Join-Path $env:TEMP 'FotoRezka_install'
 
-Write-Host "`nFotoRezka — Install`n" -ForegroundColor Cyan
+Write-Host "`nFotoRezka -- Install`n" -ForegroundColor Cyan
 
 # Clean up any previous attempt
 if (Test-Path $dir) { Remove-Item $dir -Recurse -Force }
