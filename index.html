@@ -98,7 +98,7 @@
     <!-- <a href="https://instagram.com/fotorezka">Instagram</a> -->
 </div>
 
-<p class="version">v2026.02.9</p>
+<p class="version" id="app-version"></p>
 
 <script>
 function copyCmd(id, btn) {
@@ -108,6 +108,9 @@ function copyCmd(id, btn) {
         setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
     });
 }
+fetch('https://api.github.com/repos/fotorezka/fotorezka.github.io/releases/latest')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { if (d.tag_name) document.getElementById('app-version').textContent = d.tag_name; });
 </script>
 
 </body>
