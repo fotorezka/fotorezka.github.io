@@ -22,8 +22,8 @@ Invoke-WebRequest -Uri $zipUrl -OutFile $zip -UseBasicParsing
 Write-Host "Extracting..."
 Expand-Archive -Path $zip -DestinationPath $dir -Force
 
-$inst = Get-ChildItem $dir -Filter 'install.ps1' -Recurse | Select-Object -First 1
-if (-not $inst) { throw "install.ps1 not found in archive" }
+$inst = Get-ChildItem $dir -Filter '_install.ps1' -Recurse | Select-Object -First 1
+if (-not $inst) { throw "_install.ps1 not found in archive" }
 
 Write-Host "Running installer (confirmation required)...`n"
 Start-Process powershell -Verb RunAs -Wait `
