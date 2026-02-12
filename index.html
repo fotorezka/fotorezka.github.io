@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ФотоРезка — автоматическая обрезка фотографий</title>
+    <meta name="description" content="Бесплатный инструмент для пакетной обрезки фотографий. Квадрат, портрет, пейзаж — за один клик. Работает офлайн на Windows.">
+    <meta name="keywords" content="batch photo cropping, automatic subject detection, обрезка фото, пакетная обрезка фотографий">
+    <meta property="og:title" content="ФотоРезка — автоматическая обрезка фотографий">
+    <meta property="og:description" content="Бесплатный инструмент для пакетной обрезки фотографий. Квадрат, портрет, пейзаж — за один клик.">
+    <meta property="og:url" content="https://fotorezka.github.io/">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ФотоРезка",
+        "operatingSystem": "Windows 10, Windows 11",
+        "applicationCategory": "MultimediaApplication",
+        "offers": { "@type": "Offer", "price": "0" },
+        "description": "Бесплатный инструмент для автоматической пакетной обрезки фотографий. Квадрат (1:1), портрет (3:4), пейзаж (4:3) — за один клик. Нейросеть определяет главный объект. Работает офлайн."
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, 'Segoe UI', Arial, sans-serif; color: #1a1a1a; max-width: 640px; margin: 0 auto; padding: 2rem 1.5rem; line-height: 1.6; }
+        h1 { font-size: 2rem; margin-bottom: 0.3rem; }
+        h2 { font-size: 1.1rem; color: #555; margin: 2.5rem 0 1rem; border-bottom: 1px solid #ddd; padding-bottom: 0.3rem; }
+        p { margin-bottom: 0.8rem; }
+        .subtitle { color: #555; margin-bottom: 2rem; }
+        .cmd-block { background: #1a1a2e; color: #e0e0e0; border-radius: 6px; padding: 0.8rem 1rem; margin: 0.8rem 0; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+        .cmd-block code { font-family: 'Consolas', 'Courier New', monospace; font-size: 0.85rem; word-break: break-all; }
+        .cmd-block button { background: #333; color: #ccc; border: 1px solid #555; border-radius: 4px; padding: 0.3rem 0.7rem; cursor: pointer; white-space: nowrap; font-size: 0.8rem; }
+        .cmd-block button:hover { background: #444; }
+        .cmd-block button:active { background: #555; }
+        ol { padding-left: 1.5rem; margin: 0.8rem 0; }
+        li { margin-bottom: 0.3rem; }
+        .download-link { display: inline-block; background: #2563eb; color: #fff; text-decoration: none; padding: 0.6rem 1.5rem; border-radius: 6px; margin: 0.5rem 0; font-weight: 500; }
+        .download-link:hover { background: #1d4ed8; }
+        .note { color: #666; font-size: 0.9rem; }
+        details { margin: 0.5rem 0; }
+        summary { cursor: pointer; font-weight: 500; }
+        details p { margin: 0.4rem 0 0.8rem 0; color: #444; }
+        .social { display: flex; gap: 1.5rem; margin: 1rem 0; flex-wrap: wrap; }
+        .social a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .social a:hover { text-decoration: underline; }
+        .version { color: #999; font-size: 0.8rem; margin-top: 2rem; }
+        .prose { color: #444; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+
+<h1>ФотоРезка</h1>
+<p class="subtitle">Автоматическая обрезка фотографий + извлечение портретов.<br>
+Горизонтальный, вертикальный, квадрат — за один клик.</p>
+
+<p class="prose">ФотоРезка — бесплатный инструмент для Windows, который автоматически
+обрезает фотографии в три формата: квадрат (1:1), портрет (3:4) и
+пейзаж (4:3). Программа сама определяет главный объект на фото и
+гарантирует, что он не будет обрезан. Работает полностью офлайн.</p>
+
+<h2>Установка</h2>
+<ol>
+    <li>Нажмите <b>Win+R</b></li>
+    <li>Вставьте команду:</li>
+</ol>
+<div class="cmd-block">
+    <code id="install-cmd">powershell -c "irm https://fotorezka.github.io/get.ps1 | iex"</code>
+    <button onclick="copyCmd('install-cmd', this)">Copy</button>
+</div>
+<ol start="3">
+    <li>Нажмите Enter</li>
+    <li>Нажмите &laquo;Да&raquo; в окне подтверждения</li>
+    <li>Дождитесь завершения</li>
+    <li>Готово — ярлык на рабочем столе</li>
+</ol>
+
+<h2>Или скачайте вручную</h2>
+<a class="download-link" href="https://github.com/fotorezka/fotorezka.github.io/releases/latest/download/FotoRezka.zip">Скачать FotoRezka.zip</a>
+<p class="note">Распакуйте и запустите install.cmd, согласитесь на установку (нажать Да).</p>
+
+<h2>Удаление</h2>
+<p>Win+R, вставьте:</p>
+<div class="cmd-block">
+    <code id="uninstall-cmd">powershell -c "irm https://fotorezka.github.io/uninstall.ps1 | iex"</code>
+    <button onclick="copyCmd('uninstall-cmd', this)">Copy</button>
+</div>
+<p class="note">Или удалите папку C:\Program Files\FotoRezka и ярлык с рабочего стола вручную.</p>
+
+<h2>Вопросы</h2>
+<details><summary>Нужен ли интернет?</summary><p>Нет, программа работает полностью офлайн. Интернет нужен только при первой установке для загрузки моделей (~100 МБ).</p></details>
+<details><summary>Это бесплатно?</summary><p>Да, полностью бесплатно.</p></details>
+<details><summary>Как удалить?</summary><p>Одной командой (см. выше) или вручную — удалите папку C:\Program Files\FotoRezka и ярлык с рабочего стола.</p></details>
+
+<h2>Обратная связь</h2>
+<div class="social">
+    <a href="https://t.me/fotorezka">Telegram</a>
+    <!-- <a href="https://vk.com/fotorezka">VK</a> -->
+    <!-- <a href="https://ok.ru/fotorezka">OK</a> -->
+    <!-- <a href="https://instagram.com/fotorezka">Instagram</a> -->
+</div>
+
+<p class="version">v2026.02.9</p>
+
+<script>
+function copyCmd(id, btn) {
+    var text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = 'OK!';
+        setTimeout(function() { btn.textContent = 'Copy'; }, 1500);
+    });
+}
+</script>
+
+</body>
+</html>
