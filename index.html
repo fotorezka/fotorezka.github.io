@@ -46,6 +46,29 @@
         .social a:hover { text-decoration: underline; }
         .version { color: #999; font-size: 0.8rem; margin-top: 2rem; }
         .prose { color: #444; margin: 1rem 0; }
+
+        /* How it works — pipeline steps */
+        .pipeline { margin: 1.5rem 0; }
+        .pipeline-step { margin-bottom: 2rem; }
+        .pipeline-step .step-header { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.5rem; }
+        .pipeline-step .step-num { display: inline-flex; align-items: center; justify-content: center; width: 1.7rem; height: 1.7rem; background: #2563eb; color: #fff; border-radius: 50%; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+        .pipeline-step .step-title { font-weight: 600; font-size: 1.05rem; }
+        .pipeline-step .step-desc { color: #555; margin-bottom: 0.6rem; font-size: 0.95rem; }
+        .pipeline-img { width: 100%; border-radius: 6px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); }
+        .pipeline-img-caption { font-size: 0.8rem; color: #888; margin-top: 0.3rem; text-align: center; }
+
+        /* Neural networks table */
+        .nn-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+        .nn-table th { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 2px solid #2563eb; color: #2563eb; font-weight: 600; }
+        .nn-table td { padding: 0.45rem 0.6rem; border-bottom: 1px solid #eee; vertical-align: top; }
+        .nn-table tr:last-child td { border-bottom: none; }
+        .nn-table a { color: #2563eb; text-decoration: none; }
+        .nn-table a:hover { text-decoration: underline; }
+        .nn-table code { background: #f3f4f6; padding: 0.1rem 0.35rem; border-radius: 3px; font-size: 0.82rem; }
+
+        /* FAQ additions */
+        details ul { padding-left: 1.3rem; margin: 0.3rem 0 0.6rem 0; }
+        details li { margin-bottom: 0.2rem; color: #444; }
     </style>
 </head>
 <body>
@@ -63,7 +86,94 @@
 цвета и детали, а восстановление лиц вернёт чёткость даже размытым
 портретам. Бесплатно, работает офлайн, для Windows.</p>
 
-<img src="app-window.webp" alt="ФотоРезка — окно программы" style="width:100%; border-radius:6px; margin:1.5rem 0; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+<img src="img/app-window.webp" alt="ФотоРезка — окно программы" style="width:100%; border-radius:6px; margin:1.5rem 0; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2>Как работает ФотоРезка</h2>
+
+<p class="prose">ФотоРезка использует сразу несколько нейросетей, чтобы понять что происходит на снимке: определить кто в кадре, выделить людей, животных и предметы, найти где расположено каждое лицо — и выбрать наилучший кадр для каждого портрета.</p>
+
+<div class="pipeline">
+    <div class="pipeline-step">
+        <div class="step-header"><span class="step-num">1</span><span class="step-title">Обнаружение объектов</span></div>
+        <p class="step-desc">YOLO находит всех людей, животных и предметы на снимке. YOLO Pose определяет позу каждого человека — глаза, уши, плечи — чтобы точно рассчитать область портрета.</p>
+        <img class="pipeline-img" src="img/yolo_detection.jpg" alt="YOLO обнаружение — человек, собаки, зоны кадрирования">
+        <p class="pipeline-img-caption">Зелёные рамки — обнаруженные объекты, жёлтые точки — ключевые точки позы, оранжевый пунктир — зона портрета</p>
+    </div>
+
+    <div class="pipeline-step">
+        <div class="step-header"><span class="step-num">2</span><span class="step-title">Групповые портреты</span></div>
+        <p class="step-desc">ФотоРезка умеет находить группы близко расположенных людей и автоматически вырезать как индивидуальные, так и групповые портреты. Каждый человек получает свой отдельный кадр.</p>
+        <img class="pipeline-img" src="img/group_selection.jpg" alt="Групповой портрет — два ребёнка, индивидуальные зоны">
+        <p class="pipeline-img-caption">Красная рамка — общий кадр, оранжевый пунктир — индивидуальные портреты каждого ребёнка</p>
+    </div>
+
+    <div class="pipeline-step">
+        <div class="step-header"><span class="step-num">3</span><span class="step-title">Разбор лица</span></div>
+        <p class="step-desc">Для восстановления лиц ParseNet строит точную маску каждого лица: определяет границы кожи, глаз, губ и волос. Это позволяет улучшать именно лицо, не затрагивая окружение.</p>
+        <img class="pipeline-img" src="img/parsenet_masking2.jpg" alt="ParseNet — лицо, маска, наложение">
+        <p class="pipeline-img-caption">Слева — исходное лицо, в центре — маска ParseNet, справа — область применения восстановления</p>
+    </div>
+
+    <div class="pipeline-step">
+        <div class="step-header"><span class="step-num">4</span><span class="step-title">Улучшение и восстановление</span></div>
+        <p class="step-desc">SVDLUT корректирует цвета, а GFPGAN восстанавливает детали лица — даже на старых, размытых или зашумлённых фотографиях результат выглядит чётко и естественно.</p>
+        <img class="pipeline-img" src="img/gfpgan_restoration.jpg" alt="Восстановление лица — оригинал, SVDLUT, GFPGAN">
+        <p class="pipeline-img-caption">Оригинал → цветокоррекция SVDLUT → восстановление лица GFPGAN</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<h2>Используемые нейросети</h2>
+
+<table class="nn-table">
+<tr><th>Модель</th><th>Что делает</th><th>Репо</th></tr>
+<tr>
+    <td><code>YOLO11s</code></td>
+    <td>Обнаружение объектов — люди, животные, предметы</td>
+    <td><a href="https://github.com/ultralytics/ultralytics" target="_blank">ultralytics</a></td>
+</tr>
+<tr>
+    <td><code>YOLO11s-pose</code></td>
+    <td>Определение позы — ключевые точки тела (глаза, уши, плечи)</td>
+    <td><a href="https://github.com/ultralytics/ultralytics" target="_blank">ultralytics</a></td>
+</tr>
+<tr>
+    <td><code>SVDLUT</code></td>
+    <td>Цветокоррекция — нейро-грейдинг для улучшения цветов</td>
+    <td><a href="https://github.com/Xian-Bei/SVDLUT" target="_blank">Xian-Bei/SVDLUT</a></td>
+</tr>
+<tr>
+    <td><code>Real-ESRGAN</code></td>
+    <td>Увеличение разрешения — лёгкая модель (~6 МБ, быстрая)</td>
+    <td><a href="https://github.com/xinntao/Real-ESRGAN" target="_blank">xinntao/Real-ESRGAN</a></td>
+</tr>
+<tr>
+    <td><code>RealESRGAN x4plus</code></td>
+    <td>Увеличение разрешения — тяжёлая модель (~64 МБ, лучше текстуры)</td>
+    <td><a href="https://github.com/xinntao/Real-ESRGAN" target="_blank">xinntao/Real-ESRGAN</a></td>
+</tr>
+<tr>
+    <td><code>RetinaFace</code></td>
+    <td>Детектор лиц — точное нахождение каждого лица на снимке</td>
+    <td><a href="https://github.com/xinntao/facexlib" target="_blank">xinntao/facexlib</a></td>
+</tr>
+<tr>
+    <td><code>ParseNet</code></td>
+    <td>Сегментация лица — маска кожи, глаз, губ, волос</td>
+    <td><a href="https://github.com/xinntao/facexlib" target="_blank">xinntao/facexlib</a></td>
+</tr>
+<tr>
+    <td><code>ResNet-50</code></td>
+    <td>Backbone-сеть для RetinaFace (извлечение признаков)</td>
+    <td><a href="https://github.com/KaimingHe/deep-residual-networks" target="_blank">deep-residual-networks</a></td>
+</tr>
+<tr>
+    <td><code>GFPGAN v1.4</code></td>
+    <td>Восстановление лиц — возвращает чёткость размытым портретам</td>
+    <td><a href="https://github.com/TencentARC/GFPGAN" target="_blank">TencentARC/GFPGAN</a></td>
+</tr>
+</table>
 
 <h2>Установка</h2>
 <a class="download-link" href="https://fotorezka.github.io/get-fotorezka.cmd" download="get-fotorezka.cmd">Скачать ФотоРезку</a>
@@ -99,6 +209,25 @@
 <details><summary>Нужен ли интернет?</summary><p>Нет, программа работает полностью офлайн. Интернет нужен только при первой установке для загрузки моделей (~100 МБ).</p></details>
 <details><summary>Это бесплатно?</summary><p>Да, полностью бесплатно.</p></details>
 <details><summary>Как удалить?</summary><p>Одной командой (см. выше) или вручную — удалите папку C:\Program Files\FotoRezka и ярлык с рабочего стола.</p></details>
+
+<details><summary>Какие системные требования?</summary>
+<p>Windows 10 или 11, 8 ГБ оперативной памяти (RAM). Графический ускоритель (видеокарта) <b>не требуется</b>.</p>
+<p>ФотоРезка специально написана так, чтобы нейросети устойчиво работали на любых компьютерах, даже на старых. Обработка одного снимка на старом ПК занимает 20–60 секунд, на современном — секунды.</p>
+</details>
+
+<details><summary>Для кого полезна ФотоРезка?</summary>
+<ul>
+    <li><b>Семейный архив</b> — разбираете старые фотографии и хотите получить качественные портреты каждого члена семьи, даже если портретов мало или есть только групповые снимки</li>
+    <li><b>Свадебные фотографы</b> — быстро и автоматически обработать сотни снимков, вырезать портрет каждого гостя</li>
+    <li><b>Школьные и детсадовские фото</b> — из общих групповых снимков получить индивидуальный портрет каждого ребёнка</li>
+    <li><b>Организаторы мероприятий</b> — обработка репортажных фотографий с конференций, корпоративов, праздников</li>
+    <li><b>Владельцы питомцев</b> — ФотоРезка находит и кадрирует не только людей, но и животных</li>
+</ul>
+</details>
+
+<details><summary>Можно ли использовать для обучения?</summary>
+<p>Да! ФотоРезка написана на Python, и весь исходный код открыт. Это отличный способ изучить, как применять нейросети на практике: детекция объектов (YOLO), сегментация лиц (ParseNet), восстановление изображений (GFPGAN, Real-ESRGAN), цветокоррекция (SVDLUT). Код можно свободно изучать и использовать как учебный материал.</p>
+</details>
 
 <h2>Обратная связь</h2>
 <div class="social">
