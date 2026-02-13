@@ -1,6 +1,6 @@
-# get.ps1 -- FotoRezka install bootstrap
-# Usage (pipe):   powershell -c "irm https://fotorezka.github.io/get.ps1 | iex"
-# Usage (file):   powershell -ExecutionPolicy Bypass -File get.ps1
+# _get.ps1 -- FotoRezka install bootstrap
+# Usage (pipe):   powershell -c "irm https://fotorezka.github.io/_get.ps1 | iex"
+# Usage (file):   powershell -ExecutionPolicy Bypass -File _get.ps1
 
 $ErrorActionPreference = 'Stop'
 
