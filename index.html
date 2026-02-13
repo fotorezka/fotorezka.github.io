@@ -66,9 +66,19 @@
         .nn-table a:hover { text-decoration: underline; }
         .nn-table code { background: #f3f4f6; padding: 0.1rem 0.35rem; border-radius: 3px; font-size: 0.82rem; }
 
-        /* FAQ additions */
-        details ul { padding-left: 1.3rem; margin: 0.3rem 0 0.6rem 0; }
-        details li { margin-bottom: 0.2rem; color: #444; }
+        /* FAQ — Q + one-line preview, expandable */
+        .qa { margin: 0.8rem 0; }
+        .qa-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
+        .qa-item:last-child { border-bottom: none; }
+        .qa-q { font-weight: 600; display: inline; }
+        .qa-preview { color: #444; display: inline; font-size: 0.95rem; }
+        .qa-more { display: none; color: #444; font-size: 0.95rem; margin-top: 0.4rem; padding-left: 0.1rem; }
+        .qa-more.open { display: block; }
+        .qa-more ul { padding-left: 1.3rem; margin: 0.3rem 0 0; }
+        .qa-more li { margin-bottom: 0.2rem; }
+        .qa-more p { margin-bottom: 0.4rem; }
+        .qa-more p:last-child { margin-bottom: 0; }
+        .qa-toggle { color: #2563eb; cursor: pointer; font-size: 0.88rem; border: none; background: none; padding: 0; font-family: inherit; }
     </style>
 </head>
 <body>
@@ -85,6 +95,8 @@
 <p class="prose">Старые или нечёткие фотографии? Встроенное нейро-улучшение подтянет
 цвета и детали, а восстановление лиц вернёт чёткость даже размытым
 портретам. Бесплатно, работает офлайн, для Windows.</p>
+
+<a href="https://t.me/fotorezka" style="display:inline-block; color:#2563eb; text-decoration:none; font-size:0.88rem; border:1px solid #d0d7e3; padding:0.35rem 0.9rem; border-radius:5px; margin:0.2rem 0 0.5rem;"><svg style="width:0.95em;height:0.95em;vertical-align:-0.1em;margin-right:0.3em;" viewBox="0 0 24 24" fill="#2563eb"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>Наш канал в Telegram — новости и вопросы</a>
 
 <img src="img/app-window.webp" alt="ФотоРезка — окно программы" style="width:100%; border-radius:6px; margin:1.5rem 0; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
 
@@ -105,7 +117,7 @@
         <div class="step-header"><span class="step-num">2</span><span class="step-title">Групповые портреты</span></div>
         <p class="step-desc">ФотоРезка умеет находить группы близко расположенных людей и автоматически вырезать как индивидуальные, так и групповые портреты. Каждый человек получает свой отдельный кадр.</p>
         <img class="pipeline-img" src="img/group_selection.jpg" alt="Групповой портрет — два ребёнка, индивидуальные зоны">
-        <p class="pipeline-img-caption">Красная рамка — общий кадр, оранжевый пунктир — индивидуальные портреты каждого ребёнка</p>
+        <p class="pipeline-img-caption">Красная рамка — общая область. Оранжевый пунктир — индивидуальные портреты каждого ребёнка. Зелёный пунктир показывает что из этого снимка получится вырезать кадр 3:2</p>
     </div>
 
     <div class="pipeline-step">
@@ -206,40 +218,63 @@
 <p class="note">Или удалите папку C:\Program Files\FotoRezka и ярлык с рабочего стола вручную.</p>
 
 <h2>Вопросы</h2>
-<details><summary>Нужен ли интернет?</summary><p>Нет, программа работает полностью офлайн. Интернет нужен только при первой установке для загрузки моделей (~100 МБ).</p></details>
-<details><summary>Это бесплатно?</summary><p>Да, полностью бесплатно.</p></details>
-<details><summary>Как удалить?</summary><p>Одной командой (см. выше) или вручную — удалите папку C:\Program Files\FotoRezka и ярлык с рабочего стола.</p></details>
-
-<details><summary>Какие системные требования?</summary>
-<p>Windows 10 или 11, 8 ГБ оперативной памяти (RAM). Графический ускоритель (видеокарта) <b>не требуется</b>.</p>
-<p>ФотоРезка специально написана так, чтобы нейросети устойчиво работали на любых компьютерах, даже на старых. Обработка одного снимка на старом ПК занимает 20–60 секунд, на современном — секунды.</p>
-</details>
-
-<details><summary>Для кого полезна ФотоРезка?</summary>
-<ul>
-    <li><b>Семейный архив</b> — разбираете старые фотографии и хотите получить качественные портреты каждого члена семьи, даже если портретов мало или есть только групповые снимки</li>
-    <li><b>Свадебные фотографы</b> — быстро и автоматически обработать сотни снимков, вырезать портрет каждого гостя</li>
-    <li><b>Школьные и детсадовские фото</b> — из общих групповых снимков получить индивидуальный портрет каждого ребёнка</li>
-    <li><b>Организаторы мероприятий</b> — обработка репортажных фотографий с конференций, корпоративов, праздников</li>
-    <li><b>Владельцы питомцев</b> — ФотоРезка находит и кадрирует не только людей, но и животных</li>
-</ul>
-</details>
-
-<details><summary>Можно ли использовать для обучения?</summary>
-<p>Да! ФотоРезка написана на Python, и весь исходный код открыт. Это отличный способ изучить, как применять нейросети на практике: детекция объектов (YOLO), сегментация лиц (ParseNet), восстановление изображений (GFPGAN, Real-ESRGAN), цветокоррекция (SVDLUT). Код можно свободно изучать и использовать как учебный материал.</p>
-</details>
+<div class="qa">
+    <div class="qa-item">
+        <span class="qa-q">Нужен ли интернет?</span>
+        <span class="qa-preview"> — Нет, работает полностью офлайн. Интернет нужен только при первой установке (~600 МБ).</span>
+    </div>
+    <div class="qa-item">
+        <span class="qa-q">Это бесплатно?</span>
+        <span class="qa-preview"> — Да, полностью бесплатно.</span>
+    </div>
+    <div class="qa-item">
+        <span class="qa-q">Какие системные требования?</span>
+        <span class="qa-preview"> — Windows 10–11, 8 ГБ RAM. Видеокарта не нужна.</span>
+        <button class="qa-toggle" onclick="toggleQA(this)">ещё&hellip;</button>
+        <div class="qa-more">
+            <p>ФотоРезка специально написана так, чтобы нейросети устойчиво работали на любых компьютерах, даже на старых. Обработка одного снимка на старом ПК занимает 20–60 секунд, на современном — секунды.</p>
+        </div>
+    </div>
+    <div class="qa-item">
+        <span class="qa-q">Для кого полезна?</span>
+        <span class="qa-preview"> — Семейный архив, свадебные фотографы, школы, мероприятия.</span>
+        <button class="qa-toggle" onclick="toggleQA(this)">ещё&hellip;</button>
+        <div class="qa-more">
+            <ul>
+                <li><b>Семейный архив</b> — разбираете старые фотографии и хотите получить качественные портреты каждого члена семьи, даже если портретов мало или есть только групповые снимки</li>
+                <li><b>Свадебные фотографы</b> — быстро и автоматически обработать сотни снимков, вырезать портрет каждого гостя</li>
+                <li><b>Школьные и детсадовские фото</b> — из общих групповых снимков получить индивидуальный портрет каждого ребёнка</li>
+                <li><b>Организаторы мероприятий</b> — обработка репортажных фотографий с конференций, корпоративов, праздников</li>
+                <li><b>Владельцы питомцев</b> — ФотоРезка находит и кадрирует не только людей, но и животных</li>
+            </ul>
+        </div>
+    </div>
+    <div class="qa-item">
+        <span class="qa-q">Можно ли использовать для обучения?</span>
+        <span class="qa-preview"> — Да, код открыт на Python.</span>
+        <button class="qa-toggle" onclick="toggleQA(this)">ещё&hellip;</button>
+        <div class="qa-more">
+            <p>Это отличный способ изучить, как применять нейросети на практике: детекция объектов (YOLO), сегментация лиц (ParseNet), восстановление изображений (GFPGAN, Real-ESRGAN), цветокоррекция (SVDLUT). Код можно свободно изучать и использовать как учебный материал.</p>
+        </div>
+    </div>
+    <div class="qa-item">
+        <span class="qa-q">Как удалить?</span>
+        <span class="qa-preview"> — Одной командой (см. выше) или вручную — удалите папку и ярлык.</span>
+    </div>
+</div>
 
 <h2>Обратная связь</h2>
-<div class="social">
-    <a href="https://t.me/fotorezka">Telegram</a>
-    <!-- <a href="https://vk.com/fotorezka">VK</a> -->
-    <!-- <a href="https://ok.ru/fotorezka">OK</a> -->
-    <!-- <a href="https://instagram.com/fotorezka">Instagram</a> -->
-</div>
+<p class="prose">Есть вопрос, нашли баг или хотите поделиться результатом? Подписывайтесь на канал и пишите в комментариях к постам.</p>
+<a href="https://t.me/fotorezka" style="display:inline-block; background:#2563eb; color:#fff; text-decoration:none; padding:0.5rem 1.2rem; border-radius:6px; font-weight:500; margin:0.3rem 0;">Telegram-канал ФотоРезки</a>
 
 <p class="version" id="app-version"></p>
 
 <script>
+function toggleQA(btn) {
+    var more = btn.nextElementSibling;
+    var open = more.classList.toggle('open');
+    btn.textContent = open ? 'свернуть' : 'ещё\u2026';
+}
 function copyCmd(id, btn) {
     var text = document.getElementById(id).textContent;
     navigator.clipboard.writeText(text).then(function() {
