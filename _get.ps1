@@ -27,14 +27,13 @@ if (-not $inst) { throw "_install.ps1 not found in archive" }
 
 Write-Host "Running installer (confirmation required)...`n"
 Start-Process powershell -Verb RunAs -Wait `
-    -ArgumentList "-ExecutionPolicy Bypass -File `"$($inst.FullName)`""
+    -ArgumentList "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$($inst.FullName)`""
 
 # Clean up
 Remove-Item $zip -Force -ErrorAction SilentlyContinue
 Remove-Item $dir -Recurse -Force -ErrorAction SilentlyContinue
 
 Write-Host "`nDone!" -ForegroundColor Green
-Write-Host "Models will download on first launch (~100 MB)."
 Write-Host "Full archive (with models): $fullUrl`n"
 
 # When run as a file (not piped), pause so the window doesn't close immediately
