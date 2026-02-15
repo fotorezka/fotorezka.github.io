@@ -4,9 +4,21 @@
 
 $ErrorActionPreference = 'Stop'
 
+$isPiped = -not $MyInvocation.MyCommand.Path
+
+# When piped (Win+R / irm|iex), hide the console — all UX goes through the GUI installer.
+if ($isPiped) {
+    Add-Type -MemberDefinition @'
+[DllImport("kernel32.dll")] public static extern IntPtr GetConsoleWindow();
+[DllImport("user32.dll")]   public static extern bool ShowWindow(IntPtr h, int c);
+'@ -Name NativeMethods -Namespace Win32
+    [Win32.NativeMethods]::ShowWindow([Win32.NativeMethods]::GetConsoleWindow(), 0) | Out-Null
+}
+
+try {
+
 $repoBase = 'https://github.com/fotorezka/fotorezka.github.io'
 $zipUrl   = "$repoBase/releases/latest/download/FotoRezka-update.zip"
-$fullUrl  = "$repoBase/releases/latest/download/FotoRezka.zip"
 $zip = Join-Path $env:TEMP 'FotoRezka-update.zip'
 $dir = Join-Path $env:TEMP 'FotoRezka_install'
 
@@ -34,9 +46,23 @@ Remove-Item $zip -Force -ErrorAction SilentlyContinue
 Remove-Item $dir -Recurse -Force -ErrorAction SilentlyContinue
 
 Write-Host "`nDone!" -ForegroundColor Green
-Write-Host "Full archive (with models): $fullUrl`n"
+
+} catch {
+    if ($isPiped) {
+        # Console is hidden — show error via GUI dialog
+        Add-Type -AssemblyName System.Windows.Forms
+        [System.Windows.Forms.MessageBox]::Show(
+            "Installation failed:`n`n$($_.Exception.Message)",
+            "FotoRezka",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error) | Out-Null
+    } else {
+        Write-Host "`nERROR: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    exit 1
+}
 
 # When run as a file (not piped), pause so the window doesn't close immediately
-if ($MyInvocation.MyCommand.Path) {
+if (-not $isPiped) {
     Read-Host "Press Enter to exit"
 }
