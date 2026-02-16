@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="deploy-ts" content="2026-02-15T23:32:16Z">
+    <meta name="deploy-ts" content="2026-02-16T00:12:17Z">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png">
     <title>ФотоРезка — обрезка, улучшение и восстановление фотографий</title>
     <meta name="description" content="Автоматическая обрезка фотографий во все форматы + нейро-улучшение и восстановление лиц. Бесплатно, офлайн, для Windows.">
     <meta name="keywords" content="batch photo cropping, automatic subject detection, обрезка фото, пакетная обрезка фотографий, нейро улучшение фото, восстановление лиц">
@@ -11,6 +13,7 @@
     <meta property="og:description" content="Автоматическая обрезка во все форматы + нейро-улучшение и восстановление лиц. Бесплатно, офлайн.">
     <meta property="og:url" content="https://fotorezka.github.io/">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="https://fotorezka.github.io/img/og-icon-512.png">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -28,7 +31,9 @@
         h1 { font-size: 2rem; margin-bottom: 0.3rem; }
         h2 { font-size: 1.1rem; color: #555; margin: 2.5rem 0 1rem; border-bottom: 1px solid #ddd; padding-bottom: 0.3rem; }
         p { margin-bottom: 0.8rem; }
-        .subtitle { color: #555; margin-bottom: 2rem; }
+        .subtitle { color: #555; margin-bottom: 0; }
+        .hero { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.5rem; }
+        .hero-icon { width: 80px; height: 80px; border-radius: 16px; flex-shrink: 0; }
         .cmd-block { background: #1a1a2e; color: #e0e0e0; border-radius: 6px; padding: 0.8rem 1rem; margin: 0.8rem 0; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
         .cmd-block code { font-family: 'Consolas', 'Courier New', monospace; font-size: 0.85rem; word-break: break-all; }
         .cmd-block button { background: #333; color: #ccc; border: 1px solid #555; border-radius: 4px; padding: 0.3rem 0.7rem; cursor: pointer; white-space: nowrap; font-size: 0.8rem; }
@@ -84,9 +89,14 @@
 </head>
 <body>
 
-<h1>ФотоРезка</h1>
-<p class="subtitle">Автоматическая обрезка, нейро-улучшение и восстановление лиц.<br>
-Закинул папку с фотками — получил готовый результат.</p>
+<div class="hero">
+    <img src="img/favicon-180.png" alt="" class="hero-icon">
+    <div>
+        <h1>ФотоРезка</h1>
+        <p class="subtitle">Автоматическая обрезка, нейро-улучшение и восстановление лиц.<br>
+        Закинул папку с фотками — получил готовый результат.</p>
+    </div>
+</div>
 
 <p class="prose">Вы закидываете папку с фотографиями, а ФотоРезка делает всё сама.
 Каждый снимок автоматически обрезается во все нужные форматы — горизонтальный,
